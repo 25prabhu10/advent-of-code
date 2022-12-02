@@ -12,10 +12,27 @@ fi
 
 name="$(printf "aoc%02d" "$1")"
 
+javascriptFile="$name/index.js"
+pythonFile="$name/main.py"
+
 mkdir "$name"
 
-touch "$name/index.js"
-touch "$name/main.py"
+touch "$javascriptFile"
+touch "$pythonFile"
 touch "$name/input.txt"
 touch "$name/problem.txt"
 touch "$name/example.txt"
+
+
+javascriptTemplate="import { readFile } from 'node:fs/promises'
+
+const str = await readFile('./input.txt', { encoding: 'utf-8' })
+"
+
+pythonTemplate="with open(\"./input.txt\", \"r\", encoding=\"UTF-8\") as str_file:
+    str = str_file.read()
+    "
+
+
+echo "$javascriptTemplate" > "$javascriptFile"
+echo "$pythonTemplate" > "$pythonFile"
