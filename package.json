@@ -1,0 +1,15 @@
+{
+  "name": "advent-of-code",
+  "version": "22.0.0",
+  "description": "Advent of Code Solutions",
+  "type": "module",
+  "keywords": [
+    "advent of code",
+    "aoc",
+    "JavaScript",
+    "Python",
+    "C#"
+  ],
+  "author": "Prabhu Hiremath",
+  "license": "MIT"
+}
