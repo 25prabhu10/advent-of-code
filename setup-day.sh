@@ -20,8 +20,8 @@ mkdir "$name"
 touch "$javascriptFile"
 touch "$pythonFile"
 touch "$name/input.txt"
-touch "$name/problem.txt"
 touch "$name/example.txt"
+touch "$name/README.md"
 
 
 javascriptTemplate="import { readFile } from 'node:fs/promises'
