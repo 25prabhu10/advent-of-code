@@ -14,4 +14,3 @@ with open("./input.txt", "r", encoding="UTF-8") as str_file:
     # part 2
     totalCaloriesPerElf.sort(reverse=True)
     print(totalCaloriesPerElf[0] + totalCaloriesPerElf[1] + totalCaloriesPerElf[2])
-    

@@ -1,8 +1,12 @@
 # Advent of Code Solutions
 
-Trying to solve it in both JavaScript and Python.
+Solution to the [Advent of Code](https://adventofcode.com/) problems in both JavaScript and Python.
+
+## Running Solutions
 
 To run a solution, `cd` into its directory and invoke the program:
+
+- Tested code in `Node.js v19` and `Python 3.10`
 
 ```bash
 # day 1

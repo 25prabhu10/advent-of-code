@@ -26,10 +26,10 @@ touch "$name/example.txt"
 
 javascriptTemplate="import { readFile } from 'node:fs/promises'
 
-const str = await readFile('./input.txt', { encoding: 'utf-8' })
+const str = await readFile('./example.txt', { encoding: 'utf-8' })
 "
 
-pythonTemplate="with open(\"./input.txt\", \"r\", encoding=\"UTF-8\") as str_file:
+pythonTemplate="with open(\"./example.txt\", \"r\", encoding=\"UTF-8\") as str_file:
     str = str_file.read()
     "
 
