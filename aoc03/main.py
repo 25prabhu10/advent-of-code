@@ -1,30 +1,48 @@
-with open("./input.txt", "r", encoding="UTF-8") as str_file:
-    str = str_file.read()
+"""
+Advent of Code 2022, Day 03
+"""
 
-    rucksacks = str.split('\n')
-    duplicates = []
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).parent
+INPUT_FILE = Path(SCRIPT_DIR, "input.txt")
+
+def get_priority(ch):
+    """Get priority of an alphabet"""
+    ascii_number = ord(ch)
+
+    if ascii_number > 96:
+        ascii_number -= 96
+    else:
+        ascii_number -= 38
+    return ascii_number
+
+with open(INPUT_FILE, "r", encoding="UTF-8") as str_file:
+    rucksacks = str_file.read().splitlines()
 
     # part 1
-    # for rucksack in rucksacks:
-    #     compOne = set(rucksack[:len(rucksack) // 2])
-    #     compTwo = rucksack[len(rucksack) // 2:]
+    duplicates_list_one = []
+    for rucksack in rucksacks:
+        compartment_one = set(rucksack[:len(rucksack) // 2])
+        compartment_two = rucksack[len(rucksack) // 2:]
+
+        for ch in compartment_one:
+            if ch in compartment_two:
+                duplicates_list_one.append(get_priority(ch))
+                break
+
+    print(sum(duplicates_list_one))
 
     # part 2
+    duplicates_list_two = []
     for index in range(0, len(rucksacks), 3):
-        elfOne = set(rucksacks[index])
-        elfTwo = rucksacks[index + 1]
-        elfThree = rucksacks[index + 2]
+        elf_one = set(rucksacks[index])
+        elf_two = rucksacks[index + 1]
+        elf_three = rucksacks[index + 2]
 
-        for char in elfOne:
-            if char in elfTwo and char in elfThree:
-                ascii = ord(char)
-
-                if ascii > 96:
-                    ascii -= 96
-                else:
-                    ascii -= 38
-
-                duplicates.append(ascii)
+        for ch in elf_one:
+            if ch in elf_two and ch in elf_three:
+                duplicates_list_two.append(get_priority(ch))
                 break
-    
-    print(sum(duplicates))
+
+    print(sum(duplicates_list_two))

@@ -1,57 +1,68 @@
-from functools import reduce
+"""
+Advent of Code 2022, Day 02
+"""
 
-# part 1
-# roundStrategy = {
-#   "A Y": "win",
-#   "B Z": "win",
-#   "C X": "win",
-#   "A X": "draw",
-#   "B Y": "draw",
-#   "C Z": "draw",
-#   "A Z": "lose",
-#   "B X": "lose",
-#   "C Y": "lose",
-# }
+from pathlib import Path
 
-# points = {
-#   "X": 1,
-#   "Y": 2,
-#   "Z": 3,
-#   "lose": 0,
-#   "draw": 3,
-#   "win": 6,
-# }
+SCRIPT_DIR = Path(__file__).parent
+INPUT_FILE = Path(SCRIPT_DIR, "input.txt")
 
-# def getScore(round):
-#     return points[roundStrategy[round]] + points[round[2]]
-
-# part 2
-roundStrategy = {
-  "X": { "A": "scissors", "B": "rock", "C": "paper" }, # lose
-  "Y": { "A": "rock", "B": "paper", "C": "scissors" }, # draw
-  "Z": { "A": "paper", "B": "scissors", "C": "rock" }, # win
+# A for "rock"
+# B for "paper"
+# C for "scissors"
+ALL_POSSIBLE_OUTCOMES = {
+  "A rock": "draw",
+  "A paper": "win",
+  "A scissors": "lose",
+  "B rock": "lose",
+  "B paper": "draw",
+  "B scissors": "win",
+  "C rock": "win",
+  "C paper": "lose",
+  "C scissors": "draw",
 }
 
-points = {
+POINTS = {
   "rock": 1,
   "paper": 2,
   "scissors": 3,
-  "X": 0,
-  "Y": 3,
-  "Z": 6,
+  "lose": 0,
+  "draw": 3,
+  "win": 6,
 }
 
-def getScore(playerA, strategy):
-  return points[strategy] + points[roundStrategy[strategy][playerA]]
+def calculate_score(rounds, ROUND_STRATEGY):
+    """Calculate score for given strategy"""
+
+    total_points = []
+
+    for (player_a, _, strategy) in rounds:
+        player_b = ROUND_STRATEGY[strategy][player_a]
+        outcome = ALL_POSSIBLE_OUTCOMES[f"{player_a} {player_b}"]
+        total_points.append(POINTS[outcome] + POINTS[player_b])
+
+    return total_points
 
 
-with open("./input.txt", "r", encoding="UTF-8") as str_file:
-    str = str_file.read()
+with open(INPUT_FILE, "r", encoding="UTF-8") as str_file:
+    rounds = str_file.read().splitlines()
 
-    rounds = str.split("\n")
+    # part 1
+    OLD_ROUND_STRATEGY = {
+      "X": { "A": "rock", "B": "rock", "C": "rock" },
+      "Y": { "A": "paper", "B": "paper", "C": "paper" },
+      "Z": { "A": "scissors", "B": "scissors", "C": "scissors" },
+    }
 
-    scoresPerRound = [getScore(round[0], round[2]) for round in rounds]
+    scores_per_round = calculate_score(rounds, OLD_ROUND_STRATEGY)
+    print(sum(scores_per_round))
 
-    totalScore = reduce(lambda a, b: a + b, scoresPerRound) 
+    # part 2
+    NEW_ROUND_STRATEGY = {
+      "X": { "A": "scissors", "B": "rock", "C": "paper" }, # lose
+      "Y": { "A": "rock", "B": "paper", "C": "scissors" }, # draw
+      "Z": { "A": "paper", "B": "scissors", "C": "rock" }, # win
+    }
 
-    print(totalScore)
+    new_scores_per_round = calculate_score(rounds, NEW_ROUND_STRATEGY)
+    print(sum(new_scores_per_round))

@@ -6,8 +6,6 @@ Solution to the [Advent of Code](https://adventofcode.com/) problems in both Jav
 
 To run a solution, `cd` into its directory and invoke the program:
 
-- Tested code in `Node.js v19` and `Python 3.10`
-
 ```bash
 # day 1
 cd aoc01
@@ -19,7 +17,13 @@ node index.js
 python main.py
 ```
 
+Environments:
+
+- Node.js `v19`
+- Python `v3.10`
+
 TODO:
 
 - [ ] Solutions in C#
+- [ ] Add test cases
 - [ ] Benchmark the code

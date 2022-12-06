@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ $# != 1 ]; then
     echo "Usage: $(basename "$0") <day-number>" >&2
@@ -15,6 +15,7 @@ name="$(printf "aoc%02d" "$1")"
 javascriptFile="$name/index.js"
 pythonFile="$name/main.py"
 
+# create files and directory for the given day
 mkdir "$name"
 
 touch "$javascriptFile"
@@ -24,15 +25,24 @@ touch "$name/example.txt"
 touch "$name/README.md"
 
 
+# templates
 javascriptTemplate="import { readFile } from 'node:fs/promises'
 
 const str = await readFile('./example.txt', { encoding: 'utf-8' })
 "
 
-pythonTemplate="with open(\"./example.txt\", \"r\", encoding=\"UTF-8\") as str_file:
-    str = str_file.read()
-    "
+pythonTemplate="\"\"\"
+Advent of Code 2022, Day $(printf %02d $1)
+\"\"\"
 
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).parent
+INPUT_FILE = Path(SCRIPT_DIR, \"input.txt\")
+
+with open(INPUT_FILE, \"r\", encoding=\"UTF-8\") as str_file:
+    text_content = str_file.read().splitlines()
+    "
 
 echo "$javascriptTemplate" > "$javascriptFile"
 echo "$pythonTemplate" > "$pythonFile"

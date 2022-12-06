@@ -1,67 +1,78 @@
-import re
+"""
+Advent of Code 2022, Day 05
+"""
+
 import copy
-import itertools
+import re
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).parent
+INPUT_FILE = Path(SCRIPT_DIR, "input.txt")
 
 
-def performProcedure(stacksOfCrates, rearrangementProcedure):
-    oldCrane = copy.deepcopy(stacksOfCrates)
-    newCrane = copy.deepcopy(stacksOfCrates)
+def perform_procedure(stacks_of_crates, rearrangement_procedure):
+    """Perform operations based on the procedure"""
 
-    for i in range(0, len(rearrangementProcedure)):
-        procedure = rearrangementProcedure[i].split(" ")
+    old_crane = copy.deepcopy(stacks_of_crates)
+    new_crane = copy.deepcopy(stacks_of_crates)
 
-        numOfItemsToMove = int(procedure[1])
-        takeFromStack = int(procedure[3])
-        placeIntoStack = int(procedure[5])
+    for procedure in rearrangement_procedure:
+        procedure = procedure.split(" ")
 
-        for j in range(0, numOfItemsToMove):
-            oldCrane[placeIntoStack].insert(0, oldCrane[takeFromStack].pop(0))
+        num_of_items_to_move = int(procedure[1])
+        take_from_stack = int(procedure[3])
+        place_into_stack = int(procedure[5])
 
-        craneRemovedItems = newCrane[takeFromStack][0:numOfItemsToMove]
-        del newCrane[takeFromStack][0:numOfItemsToMove]
+        for _ in range(0, num_of_items_to_move):
+            old_crane[place_into_stack].insert(0, old_crane[take_from_stack].pop(0))
 
-        newCrane[placeIntoStack] = craneRemovedItems + newCrane[placeIntoStack]
+        crane_removed_items = new_crane[take_from_stack][0:num_of_items_to_move]
+        del new_crane[take_from_stack][0:num_of_items_to_move]
 
-    return (oldCrane, newCrane)
+        new_crane[place_into_stack] = crane_removed_items + new_crane[place_into_stack]
 
-
-def getTopCrates(stacksOfCrates):
-    topCrates = ""
-
-    for stacks in range(1, len(stacksOfCrates)+1):
-        topCrates = topCrates + stacksOfCrates[stacks][0].replace("[", "").replace("]", "")
-
-    return topCrates
+    return (old_crane, new_crane)
 
 
-with open("./input.txt", "r", encoding="UTF-8") as str_file:
-    str = str_file.read()
-    
-    drawing = str.split("\n\n")
-    drawingOfCrates = drawing[0].split("\n")
-    rearrangementProcedure = drawing[1].split("\n")
+def get_top_crates(stacks_of_crates):
+    """Return top creates as a string"""
 
-    horizontalCratesDrawing = [re.findall(r'.{1,4}', row) for row in drawingOfCrates[:-1]]
+    top_crates = ""
 
-    initialStacksOfCrates = {}
+    for stacks in range(1, len(stacks_of_crates)+1):
+        top_crates = top_crates + stacks_of_crates[stacks][0].replace("[", "").replace("]", "")
+
+    return top_crates
+
+
+with open(INPUT_FILE, "r", encoding="UTF-8") as str_file:
+    # split on empty lines
+    drawing = str_file.read().split("\n\n")
+
+    drawing_of_crates = drawing[0].split("\n")
+    rearrangement_procedure = drawing[1].split("\n")
+
+    horizontal_crates_drawing = [re.findall(r".{1,4}", row) for row in drawing_of_crates[:-1]]
+
+    initial_stacks_of_crates = {}
 
     # create initial stacks from drawing
-    for row in horizontalCratesDrawing:
+    for row in horizontal_crates_drawing:
         for index, crate in enumerate(row):
             crate = crate.strip()
             if crate != "":
-                if index+1 in initialStacksOfCrates:
-                    initialStacksOfCrates[index+1].append(crate)
+                if index+1 in initial_stacks_of_crates:
+                    initial_stacks_of_crates[index+1].append(crate)
                 else:
-                    initialStacksOfCrates[index+1] = [crate]
+                    initial_stacks_of_crates[index+1] = [crate]
 
 
-    [oldCrane, newCrane] = performProcedure(initialStacksOfCrates, rearrangementProcedure)
+    [old_crane, new_crane] = perform_procedure(initial_stacks_of_crates, rearrangement_procedure)
 
     # part 1
-    oldTopCrates = getTopCrates(oldCrane)
-    print(oldTopCrates)
+    old_top_crates = get_top_crates(old_crane)
+    print(old_top_crates)
 
     # part 2
-    newTopCrates = getTopCrates(newCrane)
-    print(newTopCrates)
+    new_top_crates = get_top_crates(new_crane)
+    print(new_top_crates)

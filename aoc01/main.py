@@ -1,16 +1,23 @@
-from functools import reduce
+"""
+Advent of Code 2022, Day 01
+"""
 
-with open("./input.txt", "r", encoding="UTF-8") as str_file:
-    str = str_file.read()
-    
-    elves = [[int(calorie) for calorie in line.split("\n")] for line in str.split('\n\n')]
-    
-    totalCaloriesPerElf = [reduce(lambda a, b: a + b, elf) for elf in elves]
-    
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).parent
+INPUT_FILE = Path(SCRIPT_DIR, "input.txt")
+
+with open(INPUT_FILE, "r", encoding="UTF-8") as str_file:
+    # split on empty lines
+    text_content = str_file.read().split("\n\n")
+
+    # store total calories for each elf
+    calories_per_elf = [map(int, line.splitlines()) for line in text_content]
+    total_calories_per_elf = [sum(elf) for elf in calories_per_elf]
+
     # part 1
-    maxCalories = max(totalCaloriesPerElf)
-    print(maxCalories)
+    print(max(total_calories_per_elf))
 
     # part 2
-    totalCaloriesPerElf.sort(reverse=True)
-    print(totalCaloriesPerElf[0] + totalCaloriesPerElf[1] + totalCaloriesPerElf[2])
+    total_calories_per_elf.sort(reverse=True)
+    print(sum(total_calories_per_elf[:3]))
