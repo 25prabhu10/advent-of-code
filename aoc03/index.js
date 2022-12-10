@@ -1,16 +1,43 @@
 import { readFile } from 'node:fs/promises'
 
-const str = await readFile('./input.txt', { encoding: 'utf-8' })
+const txt = await readFile('./input.txt', { encoding: 'utf-8' })
 
-const rucksacks = str.split('\n')
-const duplicates = []
+const rucksacks = txt.split('\n')
 
-// part 1
-// for (const rucksack of rucksacks) {
-//   const compOne = new Set(rucksack.slice(0, rucksack.length / 2).split(''))
-//   const compTwo = rucksack.slice(rucksack.length / 2, rucksack.length)
+/**
+ * Get priority of an alphabet
+ * @param {*} char
+ * @returns {number} priority of the character
+ */
+function get_priority(char) {
+  let asciiNumber = char.charCodeAt(0)
+
+  if (asciiNumber > 96) asciiNumber -= 96
+  else asciiNumber -= 38
+
+  return asciiNumber
+}
+
+// part1
+const duplicatesListOne = []
+for (const rucksack of rucksacks) {
+  const compartmentOne = new Set(
+    rucksack.slice(0, rucksack.length / 2).split('')
+  )
+  const compartmentTwo = rucksack.slice(rucksack.length / 2, rucksack.length)
+
+  for (const char of compartmentOne) {
+    if (compartmentTwo.includes(char)) {
+      duplicatesListOne.push(get_priority(char))
+      break
+    }
+  }
+}
+console.log(duplicatesListOne.reduce((a, b) => a + b, 0))
 
 // part 2
+const duplicatesListTwo = []
+
 for (let index = 0; index < rucksacks.length; index += 3) {
   const elfOne = new Set(rucksacks[index].split(''))
   const elfTwo = rucksacks[index + 1]
@@ -18,18 +45,9 @@ for (let index = 0; index < rucksacks.length; index += 3) {
 
   for (let char of elfOne) {
     if (elfTwo.includes(char) && elfThree.includes(char)) {
-      let ascii = char.charCodeAt(0)
-
-      if (ascii > 96) {
-        ascii -= 96
-      } else {
-        ascii -= 38
-      }
-
-      duplicates.push(ascii)
+      duplicatesListTwo.push(get_priority(char))
       break
     }
   }
 }
-
-console.log(duplicates.reduce((a, b) => a + b, 0))
+console.log(duplicatesListTwo.reduce((a, b) => a + b, 0))

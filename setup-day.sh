@@ -28,20 +28,20 @@ touch "$name/README.md"
 # templates
 javascriptTemplate="import { readFile } from 'node:fs/promises'
 
-const str = await readFile('./example.txt', { encoding: 'utf-8' })
+const txt = await readFile('./example.txt', { encoding: 'utf-8' })
 "
 
 pythonTemplate="\"\"\"
-Advent of Code 2022, Day $(printf %02d $1)
+Advent of Code 2022, Day $(printf %02d "$1")
 \"\"\"
 
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent
-INPUT_FILE = Path(SCRIPT_DIR, \"input.txt\")
+INPUT_FILE = Path(SCRIPT_DIR, \"example.txt\")
 
 with open(INPUT_FILE, \"r\", encoding=\"UTF-8\") as str_file:
-    text_content = str_file.read().splitlines()
+    txt = str_file.read().splitlines()
     "
 
 echo "$javascriptTemplate" > "$javascriptFile"

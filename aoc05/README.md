@@ -10,7 +10,7 @@ The Elves don't want to interrupt the crane operator during this delicate proced
 
 They do, however, have a drawing of the starting stacks of crates **and** the rearrangement procedure (your puzzle input). For example:
 
-```textile
+```text
     [D]
 [N] [C]
 [Z] [M] [P]
@@ -26,7 +26,7 @@ In this example, there are three stacks of crates. Stack 1 contains two crates: 
 
 Then, the rearrangement procedure is given. In each step of the procedure, a quantity of crates is moved from one stack to a different stack. In the first step of the above rearrangement procedure, one crate is moved from stack 2 to stack 1, resulting in this configuration:
 
-```textile
+```text
 [D]
 [N] [C]
 [Z] [M] [P]
@@ -35,7 +35,7 @@ Then, the rearrangement procedure is given. In each step of the procedure, a qua
 
 In the second step, three crates are moved from stack 1 to stack 3. Crates are moved one **at a time**, so the first crate to be moved (`D`) ends up below the second and third crates:
 
-```textile
+```text
         [Z]
         [N]
     [C] [D]
@@ -45,7 +45,7 @@ In the second step, three crates are moved from stack 1 to stack 3. Crates are m
 
 Then, both crates are moved from stack 2 to stack 1. Again, because crates are moved **one at a time**, crate `C` ends up below crate `M`:
 
-```textile
+```text
         [Z]
         [N]
 [M]     [D]
@@ -55,7 +55,7 @@ Then, both crates are moved from stack 2 to stack 1. Again, because crates are m
 
 Finally, one crate is moved from stack 1 to stack 2:
 
-```textile
+```text
         [Z]
         [N]
         [D]
@@ -77,7 +77,7 @@ The CrateMover 9001 is notable for many new and exciting features: air condition
 
 Again considering the example above, the crates begin in the same configuration:
 
-```textile
+```text
     [D]
 [N] [C]
 [Z] [M] [P]
@@ -86,7 +86,7 @@ Again considering the example above, the crates begin in the same configuration:
 
 Moving a single crate from stack 2 to stack 1 behaves the same as before:
 
-```textile
+```text
 [D]
 [N] [C]
 [Z] [M] [P]
@@ -95,7 +95,7 @@ Moving a single crate from stack 2 to stack 1 behaves the same as before:
 
 However, the action of moving three crates from stack 1 to stack 3 means that those three moved crates **stay in the same order**, resulting in this new configuration:
 
-```textile
+```text
         [D]
         [N]
     [C] [Z]
@@ -105,7 +105,7 @@ However, the action of moving three crates from stack 1 to stack 3 means that th
 
 Next, as both crates are moved from stack 2 to stack 1, they **retain their order** as well:
 
-```textile
+```text
         [D]
         [N]
 [C]     [Z]
@@ -115,7 +115,7 @@ Next, as both crates are moved from stack 2 to stack 1, they **retain their orde
 
 Finally, a single crate is still moved from stack 1 to stack 2, but now it's crate `C` that gets moved:
 
-```textile
+```text
         [D]
         [N]
         [Z]

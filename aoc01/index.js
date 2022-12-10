@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 
-const str = await readFile('./input.txt', { encoding: 'utf-8' })
+const txt = await readFile('./input.txt', { encoding: 'utf-8' })
 
-const elves = str.split('\n\n')
+const elves = txt.split('\n\n')
 
 const totalCaloriesPerElf = []
 

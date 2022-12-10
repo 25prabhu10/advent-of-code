@@ -8,7 +8,7 @@ However, as some of the Elves compare their section assignments with each other,
 
 For example, consider the following list of section assignment pairs:
 
-```textile
+```text
 2-4,6-8
 2-3,4-5
 5-7,7-9
@@ -27,7 +27,7 @@ For the first few pairs, this list means:
 
 This example list uses single-digit section IDs to make it easier to draw; your actual list might contain larger numbers. Visually, these pairs of section assignments look like this:
 
-```textile
+```text
 .234.....  2-4
 .....678.  6-8
 

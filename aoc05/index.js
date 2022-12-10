@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 
-const str = await readFile('./input.txt', { encoding: 'utf-8' })
+const txt = await readFile('./input.txt', { encoding: 'utf-8' })
 
-const drawing = str.split('\n\n')
+const drawing = txt.split('\n\n')
 const drawingOfCrates = drawing[0].split('\n')
 const rearrangementProcedure = drawing[1].split('\n')
 
@@ -25,6 +25,11 @@ for (const crate of horizontalCratesDrawing) {
   }
 }
 
+/**
+ * Perform operations based on the procedure
+ * @param {Object} stacksOfCrates
+ * @returns {[Array<string>[]]} new stack after performing procedure
+ */
 function performProcedure(stacksOfCrates) {
   const oldCrane = JSON.parse(JSON.stringify(stacksOfCrates))
   const newCrane = JSON.parse(JSON.stringify(stacksOfCrates))
@@ -48,6 +53,11 @@ function performProcedure(stacksOfCrates) {
   return [oldCrane, newCrane]
 }
 
+/**
+ * Return top creates as a string
+ * @param {Object} stacksOfCrates
+ * @returns {string} top crates
+ */
 function getTopCrates(stacksOfCrates) {
   let topCrates = ''
 

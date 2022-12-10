@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 
-const str = await readFile('./input.txt', { encoding: 'utf-8' })
+const txt = await readFile('./input.txt', { encoding: 'utf-8' })
 
-const pairsList = str.split('\n')
+const pairsList = txt.split('\n')
 
 let completelyOverlappedPairs = 0
 let notOverlappingPairs = 0

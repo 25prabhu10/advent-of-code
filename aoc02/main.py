@@ -7,9 +7,12 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).parent
 INPUT_FILE = Path(SCRIPT_DIR, "input.txt")
 
-# A for "rock"
-# B for "paper"
-# C for "scissors"
+
+# Rock defeats Scissors
+# Paper defeats Rock
+# Scissors defeats Paper
+#
+# (A is "rock", B is "paper", and C is "scissors")
 ALL_POSSIBLE_OUTCOMES = {
   "A rock": "draw",
   "A paper": "win",
@@ -34,14 +37,14 @@ POINTS = {
 def calculate_score(rounds, ROUND_STRATEGY):
     """Calculate score for given strategy"""
 
-    total_points = []
+    scores_per_round = []
 
     for (player_a, _, strategy) in rounds:
         player_b = ROUND_STRATEGY[strategy][player_a]
         outcome = ALL_POSSIBLE_OUTCOMES[f"{player_a} {player_b}"]
-        total_points.append(POINTS[outcome] + POINTS[player_b])
+        scores_per_round.append(POINTS[outcome] + POINTS[player_b])
 
-    return total_points
+    return scores_per_round
 
 
 with open(INPUT_FILE, "r", encoding="UTF-8") as str_file:

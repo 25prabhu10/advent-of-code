@@ -9,10 +9,10 @@ INPUT_FILE = Path(SCRIPT_DIR, "input.txt")
 
 with open(INPUT_FILE, "r", encoding="UTF-8") as str_file:
     # split on empty lines
-    text_content = str_file.read().split("\n\n")
+    txt = str_file.read().split("\n\n")
 
     # store total calories for each elf
-    calories_per_elf = [map(int, line.splitlines()) for line in text_content]
+    calories_per_elf = [map(int, line.splitlines()) for line in txt]
     total_calories_per_elf = [sum(elf) for elf in calories_per_elf]
 
     # part 1

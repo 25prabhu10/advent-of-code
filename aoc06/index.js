@@ -1,10 +1,10 @@
 import { readFile } from 'node:fs/promises'
 
-const text_content = await readFile('./input.txt', {
+const txt = await readFile('./input.txt', {
   encoding: 'utf-8',
 })
 
-const bufferList = text_content.split('\n')
+const bufferList = txt.split('\n')
 
 function getIndexOfFirstUniqueStr(buffer, size) {
   const uniqueString = []

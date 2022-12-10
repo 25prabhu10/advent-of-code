@@ -26,9 +26,9 @@ def get_index_of_first_unique_str(buffer, size):
 
 
 with open(INPUT_FILE, "r", encoding="UTF-8") as str_file:
-    text_content = str_file.read().splitlines()
+    txt = str_file.read().splitlines()
 
-    for buffer in text_content:
+    for buffer in txt:
         # part 1
         print(get_index_of_first_unique_str(buffer, 4))
 

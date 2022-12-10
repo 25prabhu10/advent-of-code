@@ -1,67 +1,72 @@
 import { readFile } from 'node:fs/promises'
 
-const str = await readFile('./input.txt', { encoding: 'utf-8' })
+const txt = await readFile('./input.txt', { encoding: 'utf-8' })
 
-const rounds = str.split('\n')
+const rounds = txt.split('\n')
 
 /**
  * Rock defeats Scissors
  * Paper defeats Rock
  * Scissors defeats Paper
+ *
+ * (A is "rock", B is "paper", and C is "scissors")
  */
+const ALL_POSSIBLE_OUTCOMES = {
+  'A rock': 'draw',
+  'A paper': 'win',
+  'A scissors': 'lose',
+  'B rock': 'lose',
+  'B paper': 'draw',
+  'B scissors': 'win',
+  'C rock': 'win',
+  'C paper': 'lose',
+  'C scissors': 'draw',
+}
+
+const POINTS = {
+  rock: 1,
+  paper: 2,
+  scissors: 3,
+  lose: 0,
+  draw: 3,
+  win: 6,
+}
+
+/**
+ * Calculate score for given strategy
+ * @param {string[]} rounds
+ * @param {Object} ROUND_STRATEGY
+ * @returns {number[]} points per round
+ */
+function calculateScore(rounds, ROUND_STRATEGY) {
+  const scoresPerRound = []
+
+  for (const [playerA, _, strategy] of rounds) {
+    const playerB = ROUND_STRATEGY[strategy][playerA]
+    const outcome = ALL_POSSIBLE_OUTCOMES[`${playerA} ${playerB}`]
+
+    scoresPerRound.push(POINTS[outcome] + POINTS[playerB])
+  }
+
+  return scoresPerRound
+}
 
 // part 1
-// const roundStrategy = {
-//   'A Y': 'win',
-//   'B Z': 'win',
-//   'C X': 'win',
-//   'A X': 'draw',
-//   'B Y': 'draw',
-//   'C Z': 'draw',
-//   'A Z': 'lose',
-//   'B X': 'lose',
-//   'C Y': 'lose',
-// }
+const OLD_ROUND_STRATEGY = {
+  X: { A: 'rock', B: 'rock', C: 'rock' },
+  Y: { A: 'paper', B: 'paper', C: 'paper' },
+  Z: { A: 'scissors', B: 'scissors', C: 'scissors' },
+}
 
-// const points = {
-//   X: 1,
-//   Y: 2,
-//   Z: 3,
-//   win: 0,
-//   draw: 3,
-//   lose: 6,
-// }
-
-// const getScore = (round) => {
-//   return points[roundStrategy[round]] + points[round[2]]
-// }
+const scoresPerRound = calculateScore(rounds, OLD_ROUND_STRATEGY)
+console.log(scoresPerRound.reduce((a, b) => a + b, 0))
 
 // part 2
-const roundStrategy = {
+const NEW_ROUND_STRATEGY = {
   X: { A: 'scissors', B: 'rock', C: 'paper' }, // lose
   Y: { A: 'rock', B: 'paper', C: 'scissors' }, // draw
   Z: { A: 'paper', B: 'scissors', C: 'rock' }, // win
 }
 
-const points = {
-  rock: 1,
-  paper: 2,
-  scissors: 3,
-  X: 0,
-  Y: 3,
-  Z: 6,
-}
-
-const getScore = (playerA, strategy) => {
-  return points[strategy] + points[roundStrategy[strategy][playerA]]
-}
-
-let totalScore = 0
-
-for (const round of rounds) {
-  const [playerA, , strategy] = round
-
-  totalScore += getScore(playerA, strategy)
-}
-
-console.log(totalScore)
+const NewScoresPerRound = calculateScore(rounds, NEW_ROUND_STRATEGY)
+console.log(NewScoresPerRound.reduce((a, b) => a + b, 0))
